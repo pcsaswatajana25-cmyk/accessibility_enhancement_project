@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TechForward Insights - A high-performance engineering blog and technical information portal engineered with WCAG 2.1 AA accessibility standards.">
+    <title>TechForward Insights | Web Architecture & Accessibility Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Skip to Main Content Link (WCAG 2.4.1 Bypass Blocks) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Accessibility & Display Toolbar -->
+    <div class="accessibility-toolbar" role="region" aria-label="Accessibility and display settings">
+        <div class="toolbar-container">
+            <span class="toolbar-label" aria-hidden="true">Display Preferences:</span>
+            <div class="toolbar-controls">
+                <button type="button" id="theme-toggle" class="toolbar-btn" aria-pressed="false" aria-label="Switch to dark theme">
+                    <span class="icon" aria-hidden="true">🌓</span>
+                    <span class="btn-text">Dark Mode: Off</span>
+                </button>
+                <button type="button" id="contrast-toggle" class="toolbar-btn" aria-pressed="false" aria-label="Switch to high contrast mode">
+                    <span class="icon" aria-hidden="true">👁️</span>
+                    <span class="btn-text">High Contrast: Off</span>
+                </button>
+                <button type="button" id="text-size-toggle" class="toolbar-btn" aria-pressed="false" aria-label="Increase text size">
+                    <span class="icon" aria-hidden="true">A+</span>
+                    <span class="btn-text">Text Size: Normal</span>
+                </button>
+            </div>
+            <!-- Live announcement region for toolbar adjustments -->
+            <div id="toolbar-announcer" class="visually-hidden" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation Landmark (WCAG 1.3.1, 2.4.1) -->
+    <header class="site-header" role="banner">
+        <div class="header-container">
+            <div class="brand">
+                <a href="#home" class="brand-link" aria-label="TechForward Insights Home">
+                    <svg class="brand-logo" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span class="brand-name">TechForward <span class="brand-accent">Insights</span></span>
+                </a>
+            </div>
+
+            <!-- Mobile Navigation Toggle -->
+            <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+                <span class="hamburger-box" aria-hidden="true">
+                    <span class="hamburger-inner"></span>
+                </span>
+                <span class="menu-label">Menu</span>
+            </button>
+
+            <!-- Primary Navigation Landmark -->
+            <nav id="primary-nav" class="primary-nav" aria-label="Primary site navigation">
+                <ul class="nav-list" role="list">
+                    <li class="nav-item"><a href="#home" class="nav-link active" aria-current="page">Home</a></li>
+                    <li class="nav-item"><a href="#articles" class="nav-link">Articles</a></li>
+                    <li class="nav-item"><a href="#tutorials" class="nav-link">Tutorials</a></li>
+                    <li class="nav-item"><a href="#guidelines" class="nav-link">WCAG Guidelines</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Landmark -->
+    <main id="main-content" class="main-content" tabindex="-1">
+        
+        <!-- Page Title Landmark (Single H1 for the page) -->
+        <div class="hero-intro">
+            <h1 class="page-title">Engineering Accessible & High-Scale Systems</h1>
+            <p class="page-subtitle">A curated knowledge portal demonstrating WCAG 2.1/2.2 AA compliant front-end architecture, ARIA patterns, and resilient web design.</p>
+        </div>
+
+        <!-- Search and Dynamic Filter Section -->
+        <section class="search-filter-section" aria-labelledby="search-section-heading">
+            <h2 id="search-section-heading" class="visually-hidden">Search and Filter Articles</h2>
+            
+            <form role="search" id="article-search-form" class="search-form" onsubmit="return false;">
+                <div class="search-input-wrapper">
+                    <label for="search-input" class="search-label">
+                        <span class="label-text">Search articles by title or keyword</span>
+                    </label>
+                    <div class="input-action-group">
+                        <input type="search" id="search-input" class="search-input" placeholder="e.g. Accessibility, Edge Architecture, Microservices..." autocomplete="off">
+                        <button type="button" id="clear-search-btn" class="btn-clear" aria-label="Clear search input" hidden>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Filter Categories (WAI-ARIA button group / toggle pattern) -->
+            <div class="filter-group" role="group" aria-label="Filter articles by technical category">
+                <span class="filter-label" id="filter-group-label" aria-hidden="true">Filter by Topic:</span>
+                <div class="filter-chips" role="group" aria-labelledby="filter-group-label">
+                    <button type="button" class="filter-chip active" data-category="all" aria-pressed="true">All Topics</button>
+                    <button type="button" class="filter-chip" data-category="a11y" aria-pressed="false">Web Accessibility</button>
+                    <button type="button" class="filter-chip" data-category="ai" aria-pressed="false">AI & Data</button>
+                    <button type="button" class="filter-chip" data-category="cloud" aria-pressed="false">Cloud & Systems</button>
+                    <button type="button" class="filter-chip" data-category="ux" aria-pressed="false">UX Engineering</button>
+                </div>
+            </div>
+
+            <!-- Live Status Announcer for Screen Readers (WCAG 4.1.3 Status Messages) -->
+            <div id="search-results-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
+                Showing all 6 articles.
+            </div>
+        </section>
+
+        <!-- Featured Technical Analysis Section -->
+        <section class="featured-section" aria-labelledby="featured-article-heading">
+            <div class="section-header-row">
+                <h2 id="featured-article-heading" class="section-heading">Featured Technical Analysis</h2>
+                <span class="badge badge-featured" aria-label="Article status: Featured Editor's Pick">Editor's Pick</span>
+            </div>
+
+            <article class="featured-card" aria-labelledby="featured-title">
+                <div class="featured-content">
+                    <div class="card-meta">
+                        <span class="category-tag tag-architecture">System Architecture</span>
+                        <span class="meta-separator" aria-hidden="true">•</span>
+                        <time datetime="2026-10-28" class="publish-date">October 28, 2026</time>
+                        <span class="meta-separator" aria-hidden="true">•</span>
+                        <span class="reading-time"><span class="icon" aria-hidden="true">⏱</span> 6 min read</span>
+                    </div>
+
+                    <h3 id="featured-title" class="featured-headline">
+                        Next-Generation Distributed Web Architectures in 2026
+                    </h3>
+
+                    <p class="featured-excerpt">
+                        Modern enterprise web applications require resilient performance, progressive enhancement, and micro-frontend scalability. Discover key trends shaping high-load edge systems and zero-latency accessibility trees.
+                    </p>
+
+                    <div class="author-info">
+                        <span class="author-label visually-hidden">Author:</span>
+                        <span class="author-name">Dr. Elena Rostova</span>
+                        <span class="author-title">Principal Distributed Systems Architect</span>
+                    </div>
+
+                    <div class="action-row">
+                        <a href="#article-distributed-architectures" class="btn btn-primary" aria-label="Read full article: Next-Generation Distributed Web Architectures in 2026">
+                            Read Full Analysis <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                        <button type="button" id="open-share-dialog-btn" class="btn btn-secondary" aria-haspopup="dialog" aria-controls="share-dialog">
+                            <span class="icon" aria-hidden="true">↗</span> Share Article
+                        </button>
+                    </div>
+                </div>
+
+                <div class="featured-media">
+                    <figure class="media-figure">
+                        <svg class="media-svg" viewBox="0 0 600 360" role="img" aria-labelledby="hero-svg-title hero-svg-desc">
+                            <title id="hero-svg-title">Micro-Frontend & Edge Routing Architecture Diagram</title>
+                            <desc id="hero-svg-desc">Visual layout of edge proxy clusters distributing requests across autonomous micro-apps with shared state caching.</desc>
+                            <rect width="100%" height="100%" fill="#1e293b" rx="8"/>
+                            <circle cx="150" cy="180" r="50" fill="#3b82f6" opacity="0.8"/>
+                            <circle cx="450" cy="120" r="45" fill="#10b981" opacity="0.8"/>
+                            <circle cx="450" cy="240" r="45" fill="#8b5cf6" opacity="0.8"/>
+                            <line x1="190" y1="160" x2="410" y2="130" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,6"/>
+                            <line x1="190" y1="200" x2="410" y2="230" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,6"/>
+                            <text x="150" y="185" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Edge Node</text>
+                            <text x="450" y="125" fill="#ffffff" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">UI Service A</text>
+                            <text x="450" y="245" fill="#ffffff" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">UI Service B</text>
+                        </svg>
+                        <figcaption class="media-caption">
+                            Fig 1. Edge-routed distributed micro-frontend topology with resilient fallbacks.
+                        </figcaption>
+                    </figure>
+                </div>
+            </article>
+        </section>
+
+        <!-- Main Multi-Column Content Area -->
+        <div class="portal-grid-layout">
+            
+            <!-- Primary Article Stream -->
+            <section class="articles-stream-section" aria-labelledby="latest-insights-heading">
+                <h2 id="latest-insights-heading" class="section-heading">Latest Technical Insights</h2>
+                
+                <div id="articles-grid" class="articles-grid">
+                    
+                    <!-- Article 1: Accessibility -->
+                    <article class="article-card" data-category="a11y" aria-labelledby="art-title-1">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-a11y">Web Accessibility</span>
+                            <time datetime="2026-10-27" class="card-date">Oct 27, 2026</time>
+                        </div>
+                        <h3 id="art-title-1" class="card-title">
+                            WCAG 2.2 Principles for Modern Single Page Applications
+                        </h3>
+                        <p class="card-description">
+                            How to build accessible client-side routing, automated focus restoration, and dynamic status announcements without disrupting assistive technologies.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 5 minutes">5 min read</span>
+                            <a href="#article-wcag-spa" class="card-cta" aria-label="Read full article: WCAG 2.2 Principles for Modern Single Page Applications">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Article 2: AI & Data -->
+                    <article class="article-card" data-category="ai" aria-labelledby="art-title-2">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-ai">AI & Data</span>
+                            <time datetime="2026-10-25" class="card-date">Oct 25, 2026</time>
+                        </div>
+                        <h3 id="art-title-2" class="card-title">
+                            Autonomous Agents in Production CI/CD Pipelines
+                        </h3>
+                        <p class="card-description">
+                            Evaluating reliability metrics, synthetic test harness generation, and strict sandboxed security boundaries when running autonomous agent verification.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 7 minutes">7 min read</span>
+                            <a href="#article-agents-cicd" class="card-cta" aria-label="Read full article: Autonomous Agents in Production CI/CD Pipelines">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Article 3: Cloud & Systems -->
+                    <article class="article-card" data-category="cloud" aria-labelledby="art-title-3">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-cloud">Cloud Systems</span>
+                            <time datetime="2026-10-23" class="card-date">Oct 23, 2026</time>
+                        </div>
+                        <h3 id="art-title-3" class="card-title">
+                            Edge Computing & Zero-Trust Distributed Data Caches
+                        </h3>
+                        <p class="card-description">
+                            Balancing microsecond latency requirements with cryptographically verified multi-region state replication and consensus protocols.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 8 minutes">8 min read</span>
+                            <a href="#article-edge-cache" class="card-cta" aria-label="Read full article: Edge Computing and Zero-Trust Distributed Data Caches">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Article 4: UX Engineering -->
+                    <article class="article-card" data-category="ux" aria-labelledby="art-title-4">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-ux">UX Engineering</span>
+                            <time datetime="2026-10-20" class="card-date">Oct 20, 2026</time>
+                        </div>
+                        <h3 id="art-title-4" class="card-title">
+                            Designing Predictable Focus Rings and Micro-Interactions
+                        </h3>
+                        <p class="card-description">
+                            A deep dive into CSS `:focus-visible`, spatial keyboard navigation in complex data grids, and reduced-motion ergonomics for neurodivergent users.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 4 minutes">4 min read</span>
+                            <a href="#article-focus-rings" class="card-cta" aria-label="Read full article: Designing Predictable Focus Rings and Micro-Interactions">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Article 5: Accessibility -->
+                    <article class="article-card" data-category="a11y" aria-labelledby="art-title-5">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-a11y">Web Accessibility</span>
+                            <time datetime="2026-10-18" class="card-date">Oct 18, 2026</time>
+                        </div>
+                        <h3 id="art-title-5" class="card-title">
+                            Demystifying ARIA: Roles, States, and Live Regions
+                        </h3>
+                        <p class="card-description">
+                            Adhering to the First Rule of ARIA. Learn when native HTML elements supersede custom ARIA widgets and how to avoid accessibility tree antipatterns.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 6 minutes">6 min read</span>
+                            <a href="#article-aria-demystified" class="card-cta" aria-label="Read full article: Demystifying ARIA: Roles, States, and Live Regions">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Article 6: Cloud & Systems -->
+                    <article class="article-card" data-category="cloud" aria-labelledby="art-title-6">
+                        <div class="card-badge-row">
+                            <span class="category-tag tag-cloud">Cloud Systems</span>
+                            <time datetime="2026-10-14" class="card-date">Oct 14, 2026</time>
+                        </div>
+                        <h3 id="art-title-6" class="card-title">
+                            Observability at Scale: OpenTelemetry & Anomaly Detection
+                        </h3>
+                        <p class="card-description">
+                            Standardizing distributed telemetry collection across Kubernetes clusters with real-time probabilistic anomaly alerting.
+                        </p>
+                        <div class="card-footer">
+                            <span class="read-estimate" aria-label="Estimated reading time: 9 min read">9 min read</span>
+                            <a href="#article-opentelemetry" class="card-cta" aria-label="Read full article: Observability at Scale: OpenTelemetry & Anomaly Detection">
+                                Read Article <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Empty State Message (hidden by default) -->
+                <div id="no-articles-message" class="empty-state-card" hidden>
+                    <p class="empty-title">No matching articles found</p>
+                    <p class="empty-text">Try adjusting your search keywords or switching category filters.</p>
+                    <button type="button" id="reset-filter-btn" class="btn btn-secondary">Reset Filters</button>
+                </div>
+
+                <!-- WAI-ARIA Accordion Component (WCAG 2.1.1, 4.1.2) -->
+                <div class="faq-section" aria-labelledby="faq-section-heading">
+                    <h2 id="faq-section-heading" class="section-heading">Frequently Asked Accessibility Questions</h2>
+                    <p class="section-subtitle">Core standards and engineering best practices for building inclusive web applications.</p>
+                    
+                    <div class="accordion" id="faq-accordion">
+                        
+                        <!-- Accordion Item 1 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-heading">
+                                <button type="button" id="faq-trigger-1" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-1">
+                                    <span class="trigger-title">What are the essential requirements for WCAG 2.1 AA compliance?</span>
+                                    <span class="trigger-icon" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div id="faq-panel-1" class="accordion-panel" role="region" aria-labelledby="faq-trigger-1" hidden>
+                                <div class="panel-content">
+                                    <p>WCAG 2.1 Level AA encompasses 50 success criteria structured around four foundational principles: <strong>Perceivable, Operable, Understandable, and Robust</strong> (POUR). Essential benchmarks include:</p>
+                                    <ul>
+                                        <li>Minimum text color contrast ratio of <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text and UI components (SC 1.4.3, 1.4.11).</li>
+                                        <li>Complete operability via keyboard without traps or reliance on pointer gestures (SC 2.1.1, 2.1.2).</li>
+                                        <li>Clear, visible keyboard focus indicators with adequate contrast against adjacent colors (SC 2.4.7).</li>
+                                        <li>Valid document landmarks and heading hierarchies enabling swift assistive technology navigation (SC 1.3.1).</li>
+                                        <li>Predictable, accessible forms with associated labels, hints, and error notifications (SC 3.3.1, 3.3.2).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 2 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-heading">
+                                <button type="button" id="faq-trigger-2" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-2">
+                                    <span class="trigger-title">What is the "First Rule of ARIA" and why does it matter?</span>
+                                    <span class="trigger-icon" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div id="faq-panel-2" class="accordion-panel" role="region" aria-labelledby="faq-trigger-2" hidden>
+                                <div class="panel-content">
+                                    <p>The First Rule of ARIA states: <em>"If you can use a native HTML element or attribute with the semantics and behavior you already require, then do so instead of re-purposing an element and adding an ARIA role, state or property."</em></p>
+                                    <p>Native elements like <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;details&gt;</code>, and <code>&lt;dialog&gt;</code> have built-in keyboard behavior, focus management, and accessibility tree representation across all operating systems and screen readers. Misusing ARIA roles on arbitrary <code>&lt;div&gt;</code> elements frequently introduces silent accessibility bugs.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 3 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-heading">
+                                <button type="button" id="faq-trigger-3" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-3">
+                                    <span class="trigger-title">How do ARIA live regions assist screen reader users?</span>
+                                    <span class="trigger-icon" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div id="faq-panel-3" class="accordion-panel" role="region" aria-labelledby="faq-trigger-3" hidden>
+                                <div class="panel-content">
+                                    <p>ARIA live regions (<code>aria-live="polite"</code> or <code>aria-live="assertive"</code>) notify assistive technologies when content updates dynamically without requiring a page reload or shifting the user's current keyboard focus.</p>
+                                    <p>In this portal, live regions announce search filter result counts and form validation updates, ensuring blind and low-vision users remain fully aware of background data changes.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complementary Sidebar Landmark (WCAG 1.3.1) -->
+            <aside class="portal-sidebar" aria-label="Portal Sidebar and Newsletter">
+                
+                <!-- Newsletter Subscription Widget -->
+                <div class="sidebar-widget newsletter-widget" aria-labelledby="newsletter-heading">
+                    <h3 id="newsletter-heading" class="widget-title">Weekly Engineering Digest</h3>
+                    <p class="widget-description">
+                        Receive curated architecture briefings, accessibility design systems, and cloud benchmarks in your inbox every Thursday.
+                    </p>
+
+                    <!-- Accessible Form with Explicit Labels and Error Associations -->
+                    <form id="newsletter-form" class="accessible-form" novalidate>
+                        
+                        <!-- Name Field -->
+                        <div class="form-field" id="field-group-name">
+                            <label for="subscriber-name" class="form-label">
+                                Full Name <span class="required-indicator" aria-hidden="true">*</span>
+                                <span class="visually-hidden">(required)</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="subscriber-name" 
+                                name="name" 
+                                class="form-input" 
+                                required 
+                                aria-required="true"
+                                autocomplete="name"
+                                aria-describedby="name-hint name-error"
+                                aria-invalid="false">
+                            <span id="name-hint" class="field-hint">e.g. Alex Morgan</span>
+                            <span id="name-error" class="field-error" role="alert" aria-live="assertive" hidden></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-field" id="field-group-email">
+                            <label for="subscriber-email" class="form-label">
+                                Work Email Address <span class="required-indicator" aria-hidden="true">*</span>
+                                <span class="visually-hidden">(required)</span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="subscriber-email" 
+                                name="email" 
+                                class="form-input" 
+                                required 
+                                aria-required="true"
+                                autocomplete="email"
+                                aria-describedby="email-hint email-error"
+                                aria-invalid="false">
+                            <span id="email-hint" class="field-hint">We respect your privacy. No marketing spam.</span>
+                            <span id="email-error" class="field-error" role="alert" aria-live="assertive" hidden></span>
+                        </div>
+
+                        <!-- Consent Checkbox -->
+                        <div class="form-field checkbox-field" id="field-group-consent">
+                            <div class="checkbox-wrapper">
+                                <input 
+                                    type="checkbox" 
+                                    id="subscriber-consent" 
+                                    name="consent" 
+                                    class="form-checkbox" 
+                                    required 
+                                    aria-required="true"
+                                    aria-describedby="consent-error"
+                                    aria-invalid="false">
+                                <label for="subscriber-consent" class="checkbox-label">
+                                    I agree to the <a href="#privacy" class="inline-link">Terms & Privacy Policy</a> <span class="required-indicator" aria-hidden="true">*</span>
+                                </label>
+                            </div>
+                            <span id="consent-error" class="field-error" role="alert" aria-live="assertive" hidden></span>
+                        </div>
+
+                        <button type="submit" id="newsletter-submit-btn" class="btn btn-primary btn-block">
+                            Subscribe to Digest
+                        </button>
+
+                        <!-- Live Region for Form Submission Status -->
+                        <div id="newsletter-feedback" class="form-feedback-alert" role="status" aria-live="polite" hidden></div>
+                    </form>
+                </div>
+
+                <!-- Popular Topics Tag Cloud -->
+                <div class="sidebar-widget topics-widget" aria-labelledby="topics-heading">
+                    <h3 id="topics-heading" class="widget-title">Browse by Technical Tag</h3>
+                    <div class="tags-cloud" role="list">
+                        <span role="listitem"><a href="#tag-accessibility" class="tag-item">#Accessibility</a></span>
+                        <span role="listitem"><a href="#tag-wcag" class="tag-item">#WCAG2.2</a></span>
+                        <span role="listitem"><a href="#tag-aria" class="tag-item">#ARIA</a></span>
+                        <span role="listitem"><a href="#tag-edge" class="tag-item">#EdgeComputing</a></span>
+                        <span role="listitem"><a href="#tag-architecture" class="tag-item">#Microservices</a></span>
+                        <span role="listitem"><a href="#tag-ux" class="tag-item">#UXEngineering</a></span>
+                    </div>
+                </div>
+
+                <!-- Accessibility Statement Card -->
+                <div class="sidebar-widget statement-widget" aria-labelledby="statement-heading">
+                    <h3 id="statement-heading" class="widget-title">Accessibility Commitment</h3>
+                    <p class="widget-text">
+                        TechForward is committed to digital inclusion. This portal has been verified against WCAG 2.1 AA criteria using automated testing (Lighthouse, WAVE, axe-core) and screen reader testing with NVDA and VoiceOver.
+                    </p>
+                    <a href="#accessibility-statement" class="inline-link-bold">Read our Full Accessibility Policy &rarr;</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- WAI-ARIA Modal Dialog (WCAG 2.1.1, 2.1.2, 2.4.3, 4.1.2) -->
+    <div id="share-dialog" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="share-dialog-title" aria-describedby="share-dialog-desc" hidden>
+        <div class="modal-box" role="document">
+            
+            <button type="button" id="close-share-dialog-btn" class="modal-close-button" aria-label="Close share dialog">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <div class="modal-header">
+                <h3 id="share-dialog-title" class="modal-title">Share Technical Analysis</h3>
+                <p id="share-dialog-desc" class="modal-description">
+                    Share this research article with your team, engineering Slack channels, or developer networks.
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-field">
+                    <label for="share-permalink" class="form-label">Article Direct Permalink</label>
+                    <div class="copy-input-group">
+                        <input type="text" id="share-permalink" class="form-input readonly-input" value="https://techforward.internal/insights/2026/architectures" readonly>
+                        <button type="button" id="copy-link-btn" class="btn btn-primary">
+                            <span class="icon" aria-hidden="true">📋</span> Copy
+                        </button>
+                    </div>
+                </div>
+                <!-- Status announcement for clipboard copy -->
+                <div id="copy-status" class="visually-hidden" role="status" aria-live="polite"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="dismiss-share-dialog-btn" class="btn btn-secondary">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Landmark (WCAG 1.3.1, 4.1.2) -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-branding">
+                <span class="footer-logo">TechForward Insights</span>
+                <p class="footer-tagline">Engineered for performance, resilience, and complete digital inclusion.</p>
+            </div>
+
+            <nav class="footer-nav" aria-label="Footer links">
+                <ul class="footer-nav-list" role="list">
+                    <li><a href="#privacy" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#terms" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#accessibility-statement" class="footer-link">Accessibility Statement (VPAT)</a></li>
+                    <li><a href="#contact" class="footer-link">Contact Engineering</a></li>
+                    <li><a href="#rss" class="footer-link">RSS Feed</a></li>
+                </ul>
+            </nav>
+
+            <div class="footer-bottom">
+                <p class="copyright-notice">
+                    &copy; 2026 TechForward Publishing Group. Built in strict adherence to W3C WCAG 2.1 & 2.2 Level AA guidelines.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Production Accessible JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

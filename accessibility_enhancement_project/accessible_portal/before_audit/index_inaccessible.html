@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechForward Portal - Baseline Un-audited Version</title>
+    <link rel="stylesheet" href="style_inaccessible.css">
+</head>
+<body>
+    <!-- Baseline prototype with typical accessibility issues: div soup, missing labels, outline:none, etc. -->
+    
+    <div id="header">
+        <div class="logo">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%232563eb'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
+            <span class="logo-text">TechForward Portal</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Articles</a>
+            <a href="#">Tutorials</a>
+            <a href="#">Resources</a>
+            <a href="#">About</a>
+        </div>
+        <div class="theme-btn" onclick="toggleTheme()">
+            <span>🌓 Toggle Dark Mode</span>
+        </div>
+    </div>
+
+    <!-- Search Section without label or live region -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search articles...">
+        <div class="search-btn" onclick="filterArticles()">Search</div>
+        <div class="filter-chips">
+            <span class="chip active" onclick="setCategory('all')">All</span>
+            <span class="chip" onclick="setCategory('ai')">AI & Data</span>
+            <span class="chip" onclick="setCategory('a11y')">Web Accessibility</span>
+            <span class="chip" onclick="setCategory('cloud')">Cloud Architecture</span>
+        </div>
+    </div>
+
+    <div id="main-content-area">
+        <div class="hero-card">
+            <div class="badge">Featured Post</div>
+            <!-- Heading jump: h4 immediately following nothing, or improper hierarchy -->
+            <h4>Next-Generation Web Architectures in 2026</h4>
+            <div class="meta-row">
+                <span class="author">By Elena Rostova</span> • 
+                <span class="date">October 28, 2026</span> • 
+                <span class="read-time">6 min read</span>
+            </div>
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='300' viewBox='0 0 800 300'%3E%3Crect width='100%25' height='100%25' fill='%23cbd5e1'/%3E%3Ctext x='50%25' y='50%25' fill='%2364748b' font-family='sans-serif' font-size='24' text-anchor='middle'%3EHero Article Visual%3C/text%3E%3C/svg%3E">
+            <p class="summary-text">
+                Modern enterprise web applications require resilient performance, progressive enhancement, and micro-frontend scalability. Discover key trends shaping high-load systems this year.
+            </p>
+            <div class="btn-row">
+                <a href="#" class="read-btn">Read Article</a>
+                <div class="share-btn" onclick="openShareModal()">Share Article</div>
+            </div>
+        </div>
+
+        <div class="content-columns">
+            <div class="articles-list">
+                <!-- Heading out of order: h2 below h4 -->
+                <h2>Latest Technical Insights</h2>
+                
+                <div class="article-item" data-category="a11y">
+                    <!-- Image missing alt attribute -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3C/svg%3E">
+                    <div class="item-content">
+                        <!-- Heading jump: b tag as heading -->
+                        <b class="title">WCAG 2.2 Principles for Modern Single Page Apps</b>
+                        <p class="description">How to build accessible client-side routing, focus states, and dynamic status notifications without breaking screen readers.</p>
+                        <!-- Ambiguous link text -->
+                        <a href="#">Click Here</a>
+                    </div>
+                </div>
+
+                <div class="article-item" data-category="ai">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3C/svg%3E">
+                    <div class="item-content">
+                        <b class="title">Autonomous Agents in Production CI/CD Pipelines</b>
+                        <p class="description">Evaluating reliability, test harness generation, and security boundaries when integrating LLM workflows in production.</p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+
+                <div class="article-item" data-category="cloud">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3C/svg%3E">
+                    <div class="item-content">
+                        <b class="title">Edge Computing & Zero-Trust Distributed Systems</b>
+                        <p class="description">Balancing latency requirements with cryptographically verified multi-region state replication.</p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+
+                <!-- Inaccessible Accordion Section -->
+                <div class="faq-container">
+                    <h3>Frequently Asked Developer Questions</h3>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleFaq(1)">
+                            What makes a website WCAG 2.1 AA compliant? <span>+</span>
+                        </div>
+                        <div class="accordion-body" id="faq-1" style="display: none;">
+                            WCAG AA compliance requires meeting 50 success criteria covering text contrast (minimum 4.5:1), keyboard operability, visible focus indicators, accessible form controls, and assistive technology support.
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleFaq(2)">
+                            Why is semantic HTML critical for assistive technologies? <span>+</span>
+                        </div>
+                        <div class="accordion-body" id="faq-2" style="display: none;">
+                            Native HTML elements provide built-in accessibility semantics, focusability, and keyboard listeners that browser accessibility trees pass directly to screen readers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inaccessible Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-box">
+                    <h4>Weekly Tech Digest</h4>
+                    <p class="sub-text">Join 35,000+ engineers receiving curated technical deep dives every Thursday morning.</p>
+                    
+                    <!-- Inaccessible form without labels -->
+                    <div class="form-group">
+                        <input type="text" id="nameInput" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="emailInput" placeholder="name@company.com">
+                    </div>
+                    <div class="terms-row">
+                        <input type="checkbox" id="termsCheck">
+                        <span>I accept privacy policy & terms</span>
+                    </div>
+                    <div class="submit-btn" onclick="submitNewsletter()">Subscribe Now</div>
+                    <div id="formFeedback" style="display: none; color: red;">Please fill out required fields</div>
+                </div>
+
+                <div class="sidebar-box">
+                    <h4>Popular Categories</h4>
+                    <div class="tag-cloud">
+                        <a href="#">#accessibility</a>
+                        <a href="#">#ai</a>
+                        <a href="#">#frontend</a>
+                        <a href="#">#performance</a>
+                        <a href="#">#security</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inaccessible Modal Dialog (no focus trap, no ARIA attributes, no escape key) -->
+    <div id="shareModal" class="modal-overlay" style="display: none;">
+        <div class="modal-window">
+            <div class="modal-close" onclick="closeShareModal()">×</div>
+            <h4>Share This Article</h4>
+            <p>Copy the link below or share directly to engineering channels.</p>
+            <input type="text" id="shareUrl" value="https://techforward.internal/insights/2026/architectures" readonly>
+            <div class="modal-actions">
+                <div class="btn-copy" onclick="copyShareLink()">Copy URL</div>
+                <div class="btn-dismiss" onclick="closeShareModal()">Dismiss</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Accessibility</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <p class="copyright">© 2026 TechForward Publishing Group. All rights reserved.</p>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+        function openShareModal() {
+            document.getElementById('shareModal').style.display = 'flex';
+        }
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+        }
+        function copyShareLink() {
+            alert('URL copied to clipboard!');
+        }
+        function toggleFaq(id) {
+            var body = document.getElementById('faq-' + id);
+            body.style.display = (body.style.display === 'none') ? 'block' : 'none';
+        }
+        function filterArticles() {
+            // Unannounced filter action
+        }
+        function setCategory(cat) {
+            // Unannounced category toggle
+        }
+        function submitNewsletter() {
+            var email = document.getElementById('emailInput').value;
+            var feedback = document.getElementById('formFeedback');
+            if(!email) {
+                feedback.style.display = 'block';
+            } else {
+                feedback.style.display = 'none';
+                alert('Subscribed successfully!');
+            }
+        }
+    </script>
+</body>
+</html>
